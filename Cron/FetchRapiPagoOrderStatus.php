@@ -11,13 +11,13 @@ namespace MercadoPago\PaymentMagento\Cron;
 use Magento\Payment\Model\Method\Logger;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
-use MercadoPago\PaymentMagento\Gateway\Config\ConfigPec;
+use MercadoPago\PaymentMagento\Gateway\Config\ConfigRapiPago;
 use MercadoPago\PaymentMagento\Model\Console\Command\Notification\FetchStatus;
 
 /**
- * CronTab for fetch Pec Order Status.
+ * CronTab for fetch Rapi Pago Order Status.
  */
-class FetchPecOrderStatus
+class FetchRapiPagoOrderStatus
 {
     /**
      * @var Logger
@@ -67,13 +67,13 @@ class FetchPecOrderStatus
                     'main_table.entity_id = sop.parent_id',
                     ['method']
                 )
-                ->where('sop.method = ?', ConfigPec::METHOD);
+                ->where('sop.method = ?', ConfigRapiPago::METHOD);
 
         foreach ($orders as $order) {
             $orderId = $order->getEntityId();
 
             $this->logger->debug([
-                'fetch'   => 'Fetch Status Pec for Order Id '.$orderId,
+                'fetch'   => 'Fetch Status RapiPago for Order Id '.$orderId,
             ]);
 
             $this->fetchStatus->fetch($orderId);

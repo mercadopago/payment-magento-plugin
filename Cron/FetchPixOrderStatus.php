@@ -73,7 +73,7 @@ class FetchPixOrderStatus
             $orderId = $order->getEntityId();
 
             $this->logger->debug([
-                'fetch'   => 'Order Id '.$orderId,
+                'fetch'   => 'Fetch Status Pix for Order Id '.$orderId,
             ]);
 
             $this->fetchStatus->fetch($orderId);

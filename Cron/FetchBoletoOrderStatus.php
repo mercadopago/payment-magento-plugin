@@ -73,7 +73,7 @@ class FetchBoletoOrderStatus
             $orderId = $order->getEntityId();
 
             $this->logger->debug([
-                'fetch'   => 'Order Id '.$orderId,
+                'fetch'   => 'Fetch Status Boleto for Order Id '.$orderId,
             ]);
 
             $this->fetchStatus->fetch($orderId);

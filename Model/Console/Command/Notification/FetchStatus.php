@@ -70,6 +70,8 @@ class FetchStatus extends AbstractModel
             $order->setStatus('pending');
         }
 
+        $order->save();
+
         $this->writeln(
             '<info>'.
             __(

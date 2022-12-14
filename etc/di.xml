@@ -2228,12 +2228,6 @@
         </arguments>
     </type>
 
-    <type name="MercadoPago\PaymentMagento\Cron\FetchTicketOrderStatus">
-        <arguments>
-            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
-        </arguments>
-    </type>
-
     <type name="MercadoPago\PaymentMagento\Cron\FetchPecOrderStatus">
         <arguments>
             <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
@@ -2241,6 +2235,78 @@
     </type>
 
     <type name="MercadoPago\PaymentMagento\Cron\CancelCheckoutPro">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchAbitabOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchBanamexOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchBancomerOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchEfectyOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchOxxoOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchPagoEfectivoOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchPagoFacilOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchPayCashOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchPseOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchRapiPagoOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchSerfinOrderStatus">
+        <arguments>
+            <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="MercadoPago\PaymentMagento\Cron\FetchWebpayOrderStatus">
         <arguments>
             <argument name="logger" xsi:type="object">PaymentMagentoLogger</argument>
         </arguments>
