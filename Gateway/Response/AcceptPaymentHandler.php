@@ -39,7 +39,7 @@ class AcceptPaymentHandler implements HandlerInterface
             $payment = $paymentDO->getPayment();
 
             $order = $payment->getOrder();
-            $amount = $order->getTotalDue();
+            $amount = $order->getBaseGrandTotal();
 
             $payment->registerAuthorizationNotification($amount);
             $payment->registerCaptureNotification($amount);

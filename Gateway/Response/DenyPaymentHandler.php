@@ -67,8 +67,12 @@ class DenyPaymentHandler implements HandlerInterface
             $baseAmount = $order->getBaseTotalDue();
 
             $payment->setPreparedMessage(__('Order Canceled.'));
-            $payment->setIsTransactionPending(false);
+            $payment->registerVoidNotification($amount);
+            $payment->setIsTransactionApproved(false);
             $payment->setIsTransactionDenied(true);
+            $payment->setIsTransactionPending(false);
+            $payment->setIsInProcess(true);
+            $payment->setIsTransactionClosed(true);
             $payment->setAmountCanceled($amount);
             $payment->setBaseAmountCanceled($baseAmount);
             $payment->setShouldCloseParentTransaction(true);

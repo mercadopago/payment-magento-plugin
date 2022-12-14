@@ -82,7 +82,7 @@ class CcTransactionAuthorizationHandler implements HandlerInterface
 
         $order = $payment->getOrder();
 
-        $amount = $order->getGrandTotal();
+        $amount = $order->getBaseGrandTotal();
 
         if ($response[self::STATUS] === self::APPROVED ||
             $response[self::STATUS] === self::IN_PROCCESS
