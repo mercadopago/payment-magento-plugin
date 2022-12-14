@@ -63,7 +63,7 @@
                 <can_deny_payment>1</can_deny_payment>
                 <can_accept_payment>1</can_accept_payment>
                 <group>mercadopago_group</group>
-                <cctypes>visa,master,elo,amex,debmaster,hipercard,debvisa,debelo,cabal,debcabal,cmr,cencosud,dinners,tarshop,argencard,naranja,maestro,tengo,sodexo,carnet,toka,mercadopagocard,edenred,redcompra,webpay,magna,presto,codensa,lider,creditel,oca,mediotest</cctypes>
+                <cctypes>visa,master,elo,amex,debmaster,hipercard,debvisa,debelo,cabal,debcabal,cmr,cencosud,dinners,tarshop,argencard,naranja,maestro,tengo,sodexo,carnet,toka,mercadopagocard,edenred,redcompra,webpay,magna,presto,codensa,lider,creditel,oca</cctypes>
                 <cctypes_mco>visa,master,amex,dinners,debmaster,debvisa,codensa</cctypes_mco>
                 <cctypes_mlb>visa,master,elo,amex,debmaster,hipercard,debvisa,debelo,cabal,debcabal</cctypes_mlb>
                 <cctypes_mlc>visa,master,amex,dinners,debmaster,debvisa,redcompra,webpay,magna,presto</cctypes_mlc>
@@ -78,7 +78,7 @@
                 <cctypes_mapper_mla><![CDATA[{"Visa":"visa","Mastercard":"master","Amex":"amex","Mastercard Débito":"debmaster","Hipercard":"hipercard","Visa Débito":"debvisa","Cabal":"cabal","Cabal Débito":"debcabal","cmr":"cmr","Cencosud":"cencosud","Diners":"dinners","Tarjeta Shopping":"tarshop","Argencard":"argencard","Naranja":"naranja","Maestro":"maestro"}]]></cctypes_mapper_mla>
                 <cctypes_mapper_mlm><![CDATA[{"Visa":"visa","Mastercard":"master","Amex":"amex","Mastercard Débito":"debmaster","Hipercard":"hipercard","Visa Débito":"debvisa","Tengo":"TENGO","Sodexo":"SODEXO","Carnet":"CARNET","Toka":"TOKA","Tarjeta MercadoPago":"MERCADOPAGOCARD","Edenred":"EDENRED"}]]></cctypes_mapper_mlm>
                 <cctypes_mapper_mlu><![CDATA[{"Visa": "visa","Mastercard": "master","Amex": "amex","Mastercard Débito": "debmaster","Visa Débito": "debvisa","Dinners":"dinners","Lider":"LIDER","Creditel":"CREDITEL","Oca":"OCA"}]]></cctypes_mapper_mlu>
-                <cctypes_mapper_mpe><![CDATA[{"Visa": "visa","Mastercard": "master","Amex": "amex","Mastercard Débito": "debmaster","Visa Débito": "debvisa","Dinners":"dinners","Medio Test":"MEDIOTEST"}]]></cctypes_mapper_mpe>
+                <cctypes_mapper_mpe><![CDATA[{"Visa": "visa","Mastercard": "master","Amex": "amex","Mastercard Débito": "debmaster","Visa Débito": "debvisa","Dinners":"dinners"}]]></cctypes_mapper_mpe>
                 <cvv_enabled>1</cvv_enabled>
                 <is_binary>1</is_binary>
                 <get_document_identification>0</get_document_identification>
