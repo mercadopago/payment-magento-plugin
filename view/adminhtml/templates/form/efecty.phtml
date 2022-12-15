@@ -16,7 +16,7 @@ $paymentMethodId = $block->escapeHtml($block->getPaymentMethodId());
 $publicToken = $block->escapeHtml($block->getMpPublicKey());
 ?>
 
-<fieldset class="admin__fieldset payment-method" id="payment_form_<?= /* @noEscape */ $code ?>" >
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?= /* @noEscape */ $code ?>" style="display: none;" >
     <input type="hidden" name="payment[payment_method_id]" value="<?=  /* @noEscape */ $paymentMethodId ?>"> 
     <div class="field-text required admin__field _required">
         <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_payer_document_type">
@@ -51,26 +51,20 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
         </div>
     </div>
 </fieldset>
-
-
-<?= /* @noEscape */ $secureRenderer->renderStyleAsTag(
-    "display:none",
-    'fieldset#payment_form_' . $block->escapeJs($block->getMethodCode())
-) ?>
-<?php $scriptString = <<<script
+<script>
     require(["Magento_Sales/order/create/form"], function () {
-        order.addExcludedPaymentMethod('{$code}');
+        order.addExcludedPaymentMethod('<?= $block->escapeHtml($code) ?>');
     });
     require(["MercadoPagoSDKJs"], function () {
         if (!window.mp) {
-            window.mp = new MercadoPago('{$publicToken}');
+            window.mp = new MercadoPago('<?= $block->escapeHtml($publicToken) ?>');
         }
         async function getIdentificationTypes() {
             try {
                 const identificationTypes = await window.mp.getIdentificationTypes();
                 console.log(identificationTypes);
                 createSelectOptions(
-                    document.getElementById('mercadopago_paymentmagento_efecty_payer_document_type'),
+                    document.getElementById('<?= $block->escapeHtml($code) ?>_payer_document_type'),
                     identificationTypes
                 );
             } catch (e) {
@@ -103,6 +97,4 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
         };
         getIdentificationTypes();
     });
-script;
-?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+</script>
