@@ -17,7 +17,6 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Payment\Gateway\Config\Config as PaymentConfig;
 use Magento\Store\Model\ScopeInterface;
 use MercadoPago\PaymentMagento\Gateway\Data\Order\OrderAdapterFactory;
-use MercadoPago\PaymentMagento\Gateway\Request\BillingAddressDataRequest;
 
 /**
  * Gateway setting for the payment method.
@@ -423,29 +422,6 @@ class Config extends PaymentConfig
     }
 
     /**
-     * Get Address Limit to Send.
-     *
-     * @param string $field
-     *
-     * @return int $limitSend
-     */
-    public function getAddressLimitSend($field): int
-    {
-        $limitSend = 57;
-        if ($field === BillingAddressDataRequest::STREET_NAME) {
-            $limitSend = 57;
-        } elseif ($field === BillingAddressDataRequest::STREET_NUMBER) {
-            $limitSend = 6;
-        } elseif ($field === BillingAddressDataRequest::STREET_NEIGHBORHOOD) {
-            $limitSend = 60;
-        } elseif ($field === BillingAddressDataRequest::STREET_COMPLEMENT) {
-            $limitSend = 30;
-        }
-
-        return $limitSend;
-    }
-
-    /**
      * Value For Field Address.
      *
      * @param OrderAdapterFactory $adress
@@ -456,24 +432,19 @@ class Config extends PaymentConfig
     public function getValueForAddress($adress, $field): ?string
     {
         $value = (int) $this->getAddtionalValue($field);
-        $limitSend = $this->getAddressLimitSend($field);
 
         if ($value === 0) {
-            return substr($adress->getStreetLine1(), 0, $limitSend);
+            return $adress->getStreetLine1();
         } elseif ($value === 1) {
-            return substr($adress->getStreetLine2(), 0, $limitSend);
+            return $adress->getStreetLine2();
         } elseif ($value === 2) {
             if ($adress->getStreetLine3()) {
-                return substr($adress->getStreetLine3(), 0, $limitSend);
+                return $adress->getStreetLine3();
             }
         } elseif ($value === 3) {
             if ($adress->getStreetLine4()) {
-                return substr($adress->getStreetLine4(), 0, $limitSend);
+                return $adress->getStreetLine4();
             }
-        }
-
-        if ($field === BillingAddressDataRequest::STREET_NEIGHBORHOOD) {
-            return substr($adress->getStreetLine1(), 0, $limitSend);
         }
 
         return '';
