@@ -1,0 +1,24 @@
+checks:
+    php:
+        code_rating: true
+        duplication: true
+        excluded_dependencies:
+            - magento/*
+
+filter: 
+    excluded_paths:
+         - vendor
+
+build:
+    environment:
+            php:
+                version: 7.4
+    dependencies:
+        before:
+            - composer self-update --1
+            - 'echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json'
+    nodes:
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
