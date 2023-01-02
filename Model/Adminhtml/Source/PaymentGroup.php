@@ -9,6 +9,7 @@
 namespace MercadoPago\PaymentMagento\Model\Adminhtml\Source;
 
 use Magento\Config\Block\System\Config\Form\Fieldset;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**

@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        php_version: "8.1"
+        php_version: "7.4"
         php_extensions: opcache gd mysqli curl intl xsl mbstring zip bcmath soap xdebug
 
     - name: Remove auth.json file

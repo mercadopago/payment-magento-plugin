@@ -7,7 +7,7 @@
  */
 
 /**
- * @var \MercadoPago\PaymentMagento\Block\Sales\Form\Oxxo $block
+ * @var \MercadoPago\PaymentMagento\Block\Sales\Form\Abitab $block
  */
 
 $code = $block->escapeHtml($block->getMethodCode());
@@ -56,14 +56,14 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
     });
     require(["MercadoPagoSDKJs"], function () {
         if (!window.mp) {
-            window.mp = new MercadoPago('<?= $block->escapeHtml($publicToken) ?>');
+            window.mp = new MercadoPago('{$publicToken}');
         }
         async function getIdentificationTypes() {
             try {
                 const identificationTypes = await window.mp.getIdentificationTypes();
                 console.log(identificationTypes);
                 createSelectOptions(
-                    document.getElementById('<?= $block->escapeHtml($code) ?>_payer_document_type'),
+                    document.getElementById('mercadopago_paymentmagento_abitab_payer_document_type'),
                     identificationTypes
                 );
             } catch (e) {

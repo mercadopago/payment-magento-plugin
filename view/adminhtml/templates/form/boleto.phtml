@@ -8,14 +8,14 @@
 
 /**
  * @var \MercadoPago\PaymentMagento\Block\Sales\Form\Boleto $block
- * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 
 $code = $block->escapeHtml($block->getMethodCode());
 $publicToken = $block->escapeHtml($block->getMpPublicKey());
 $paymentIdMethod = $block->escapeHtml($block->getPaymentMethodId());
 ?>
-<fieldset class="admin__fieldset payment-method" id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" style="display: none;">
+<fieldset class="admin__fieldset payment-method"
+    id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" style="display: none;">
     <input type="hidden" value="<?= /* @noEscape */ $paymentIdMethod; ?>" name="payment[payment_method_id]">
     <div class="field-text required admin__field _required">
         <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_payer_document_type">
@@ -45,7 +45,7 @@ $paymentIdMethod = $block->escapeHtml($block->getPaymentMethodId());
     </div>
 
     <div class="admin__field">
-        <label class="admin__field-label"><span><?= $block->escapeHtml(__('Due')) ?></span></label>
+        <label class="admin__field-label"><span><?= $block->escapeHtml(__('Due date')) ?></span></label>
         <div class="admin__field-control checkmo-mailing-address">
             <?= /* @noEscape */ nl2br($block->escapeHtml($block->getExpiration())) ?>
         </div>
@@ -57,20 +57,22 @@ $paymentIdMethod = $block->escapeHtml($block->getPaymentMethodId());
         </div>
     </div>
 </fieldset>
+
 <script>
     require(["Magento_Sales/order/create/form"], function () {
-        order.addExcludedPaymentMethod('<?= $block->escapeHtml($code) ?>');
+        order.addExcludedPaymentMethod('{$code}');
     });
     require(["MercadoPagoSDKJs"], function () {
         if (!window.mp) {
-            window.mp = new MercadoPago('<?= $block->escapeHtml($publicToken) ?>');
+            window.mp = new MercadoPago('{$publicToken}');
         }
+
         async function getIdentificationTypes() {
             try {
                 const identificationTypes = await window.mp.getIdentificationTypes();
                 console.log(identificationTypes);
                 createSelectOptions(
-                    document.getElementById('<?= $block->escapeHtml($code) ?>_payer_document_type'),
+                    document.getElementById('mercadopago_paymentmagento_boleto_payer_document_type'),
                     identificationTypes
                 );
             } catch (e) {

@@ -8,12 +8,13 @@
 
 /**
  * @var \MercadoPago\PaymentMagento\Block\Sales\Form\CheckoutPro $block
- * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 ?>
-<fieldset class="admin__fieldset payment-method" id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" style="display: none;" >
+<fieldset class="admin__fieldset payment-method" 
+    id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" 
+    style="display: none;">
     <div class="admin__field">
-        <label class="admin__field-label"><span><?= $block->escapeHtml(__('Due')) ?></span></label>
+        <label class="admin__field-label"><span><?= $block->escapeHtml(__('Due date')) ?></span></label>
         <div class="admin__field-control checkmo-mailing-address">
             <?= /* @noEscape */ nl2br($block->escapeHtml($block->getExpiration())) ?>
         </div>

@@ -65,7 +65,7 @@ class TxnIdCheckoutProHandler implements HandlerInterface
         $order = $payment->getOrder();
         $order->setState(\Magento\Sales\Model\Order::STATE_NEW);
         $order->setStatus('pending');
-        $comment = __('Awaiting payment of the checkout pro.');
+        $comment = __('Awaiting payment through Checkout Pro.');
         $order->addStatusHistoryComment($comment, $payment->getOrder()->getStatus());
     }
 
@@ -79,10 +79,12 @@ class TxnIdCheckoutProHandler implements HandlerInterface
      */
     public function setAddtionalInformation($payment, $response)
     {
-        $payment->setAdditionalInformation(
-            self::DATE_OF_EXPIRATION,
-            $response[self::DATE_OF_EXPIRATION]
-        );
+        if (isset($response[self::DATE_OF_EXPIRATION])) {
+            $payment->setAdditionalInformation(
+                self::DATE_OF_EXPIRATION,
+                $response[self::DATE_OF_EXPIRATION]
+            );
+        }
 
         $payment->setAdditionalInformation(
             self::INIT_POINT,

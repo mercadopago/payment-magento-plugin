@@ -51,20 +51,21 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
         </div>
     </div>
 </fieldset>
+
 <script>
     require(["Magento_Sales/order/create/form"], function () {
-        order.addExcludedPaymentMethod('<?= $block->escapeHtml($code) ?>');
+        order.addExcludedPaymentMethod('{$code}');
     });
     require(["MercadoPagoSDKJs"], function () {
         if (!window.mp) {
-            window.mp = new MercadoPago('<?= $block->escapeHtml($publicToken) ?>');
+            window.mp = new MercadoPago('{$publicToken}');
         }
         async function getIdentificationTypes() {
             try {
                 const identificationTypes = await window.mp.getIdentificationTypes();
                 console.log(identificationTypes);
                 createSelectOptions(
-                    document.getElementById('<?= $block->escapeHtml($code) ?>_payer_document_type'),
+                    document.getElementById('mercadopago_paymentmagento_paycash_payer_document_type'),
                     identificationTypes
                 );
             } catch (e) {
