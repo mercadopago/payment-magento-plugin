@@ -15,7 +15,9 @@ $code = $block->escapeHtml($block->getMethodCode());
 $publicToken = $block->escapeHtml($block->getMpPublicKey());
 ?>
 
-<fieldset class="admin__fieldset payment-method" id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>" >
+<fieldset class="admin__fieldset payment-method" 
+    id="payment_form_<?= $block->escapeHtml($block->getMethodCode()) ?>"
+    style="display: none;">
 <div class="field-text required admin__field _required">
         <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_payer_document_type">
             <span><?= $block->escapeHtml(__('Document Type')) ?></span>
@@ -50,12 +52,7 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
     </div>
 </fieldset>
 
-
-<?= /* @noEscape */ $secureRenderer->renderStyleAsTag(
-    "display:none",
-    'fieldset#payment_form_' . $block->escapeJs($block->getMethodCode())
-) ?>
-<?php $scriptString = <<<script
+<script>
     require(["Magento_Sales/order/create/form"], function () {
         order.addExcludedPaymentMethod('{$code}');
     });
@@ -101,6 +98,4 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
         };
         getIdentificationTypes();
     });
-script;
-?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+</script>
