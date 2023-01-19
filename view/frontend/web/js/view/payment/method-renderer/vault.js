@@ -34,12 +34,15 @@ define([
             active: false,
             template: 'MercadoPago_PaymentMagento/payment/vault',
             vaultForm: 'MercadoPago_PaymentMagento/payment/vault-form',
-            amount:  quote.totals().grand_total,
+            amount:  quote.totals().base_grand_total,
             creditCardListInstallments: '',
             creditCardVerificationNumber: '',
             creditCardInstallment: '',
             creditCardNumberToken: '',
             creditCardType: '',
+            installmentTextInfo: false,
+            installmentTextTEA: null,
+            installmentTextCFT: null,
             isLoading: true
         },
 
@@ -57,6 +60,9 @@ define([
                 'creditCardInstallment',
                 'creditCardNumberToken',
                 'creditCardType',
+                'installmentTextInfo',
+                'installmentTextTEA',
+                'installmentTextCFT',
                 'isLoading'
             ]);
             return this;
@@ -134,7 +140,7 @@ define([
                         financeCostAmount = segment['value'];
                     }
                 });
-                self.amount(value.grand_total - financeCostAmount);
+                self.amount(value.base_grand_total - financeCostAmount);
             });
 
             self.amount.subscribe((value) => {
@@ -221,12 +227,47 @@ define([
         },
 
         /**
+         * Display Error in Field
+         * @param {Array} error
+         * @return {void}
+         */
+        displayErrorInField(error) {
+            let self = this,
+                field = error.field,
+                msg = error.message,
+                vaultId = self.getId(),
+                fieldSecurityCode = vaultId + '_cc_id',
+                fieldsMage = {
+                    securityCode: fieldSecurityCode
+                };
+
+            self.singleToogleValidityState(fieldsMage[field], msg);
+        },
+
+        /**
          * Toogle Focus Style
          * @param {String} element
          * @returns {void}
          */
         toogleFocusStyle(element) {
             $('#' + element).closest('.control-mp-iframe').addClass('in-focus');
+        },
+
+        /**
+         * Single Toogle Validity State
+         * @param {String} element
+         * @param {String} errorMessages
+         * @returns {Jquery}
+         */
+        singleToogleValidityState(element, errorMessages) {
+            var target = $('#' + element).closest('.mercadopago-input-group');
+
+            if (errorMessages.length)
+            {
+                target.append('<div class="field-error"><span>' + errorMessages + '</span></div>');
+                return $('#' + element).closest('.control-mp-iframe').addClass('has-error').removeClass('is-valid');
+            }
+            return $('#' + element).closest('.control-mp-iframe').addClass('is-valid').removeClass('has-error');
         },
 
         /**
@@ -261,6 +302,30 @@ define([
         },
 
         /**
+         * Add Text for Installments
+         * @param {Array} labels
+         * @return {void}
+         */
+        addTextForInstallment(labels) {
+            var self = this,
+                texts;
+
+            self.installmentTextInfo(true);
+
+            _.map(labels, (label) => {
+                texts = label.split('|');
+                _.map(texts, (text) => {
+                    if (text.includes('TEA')) {
+                        self.installmentTextTEA(text.replace('_', ' '));
+                    }
+                    if (text.includes('CFT')) {
+                        self.installmentTextCFT(text.replace('_', ' '));
+                    }
+                });
+            });
+        },
+
+        /**
          * Get card id details
          * @returns {void}
          */
@@ -279,7 +344,12 @@ define([
                 self.creditCardNumberToken(token.id);
                 this.placeOrder();
                 fullScreenLoader.stopLoader();
-            }).catch(() => {
+            }).catch((errors) => {
+
+                _.map(errors, (error) => {
+                    self.displayErrorInField(error);
+                });
+
                 messageList.addErrorMessage({
                     message: $t('Unable to make payment, check card details.')
                 });
@@ -295,6 +365,14 @@ define([
             var self = this,
                 selectInstallment = self.creditCardInstallment(),
                 rulesForFinanceCost = self.creditCardListInstallments();
+
+            if (self.getMpSiteId() === 'MLA') {
+                _.map(rulesForFinanceCost, (keys) => {
+                    if (keys.installments === selectInstallment) {
+                        self.addTextForInstallment(keys.labels);
+                    }
+                });
+            }
 
             setFinanceCost.financeCost(selectInstallment, rulesForFinanceCost);
         },
@@ -427,6 +505,14 @@ define([
          */
         hasVerification() {
             return window.checkoutConfig.payment[this.getCode()].useCvv;
+        },
+
+        /**
+         * Get Mp Site Id
+         * @returns {String}
+         */
+        getMpSiteId() {
+            return window.checkoutConfig.payment['mercadopago_paymentmagento'].mp_site_id;
         },
 
         /**
