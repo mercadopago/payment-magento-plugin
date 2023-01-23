@@ -241,10 +241,8 @@ class ConfigWebpay extends PaymentConfig
             $payments = $this->configBase->getMpPaymentMethods($storeId);
 
             foreach ($payments['response'] as $payment) {
-                if (isset($payments['id'])) {
-                    if ($payment['id'] === self::PAYMENT_METHOD_ID) {
-                        $finInstitutions = $payment['financial_institutions'];
-                    }
+                if ($payment['id'] === self::PAYMENT_METHOD_ID) {
+                    $finInstitutions = $payment['financial_institutions'];
                 }
             }
         }
