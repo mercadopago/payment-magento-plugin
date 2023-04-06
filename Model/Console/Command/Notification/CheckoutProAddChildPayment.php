@@ -74,10 +74,13 @@ class CheckoutProAddChildPayment extends AbstractModel
             $this->writeln('<error>'.$exc->getMessage().'</error>');
         }
 
+        /** Sets order with state Payment Review if order status is not closed */
         if ($order->getState() === Order::STATE_PAYMENT_REVIEW) {
-            $order = $payment->getOrder();
-            $order->setState(Order::STATE_NEW);
-            $order->setStatus('pending');
+            if ($order->getStatus() !== Order::STATE_CLOSED) {
+                $order = $payment->getOrder();
+                $order->setState(Order::STATE_NEW);
+                $order->setStatus('pending');
+            }
         }
 
         $this->writeln(

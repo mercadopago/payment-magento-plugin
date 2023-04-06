@@ -245,7 +245,25 @@ abstract class MpIndex extends Action
 
                     $this->notifierPool->addCritical($header, $description);
                 }
+
+                $result = [
+                    'isInvalid' => true,
+                    'code'      => 200,
+                    'msg'       => __('Refund notification for order refunded directly in Mercado Pago.'),
+                ];
+    
+                return $result;
             }
+
+            if ($order->getState() === \Magento\Sales\Model\Order::STATE_CLOSED) {{
+                $result = [
+                'isInvalid' => true,
+                'code'      => 200,
+                'msg'       => __('Refund notification for order already closed.'),
+                ];
+    
+                return $result;
+            }}
 
             $result = [
                 'isInvalid' => true,
@@ -273,7 +291,7 @@ abstract class MpIndex extends Action
         $result = [
             'isInvalid' => false,
         ];
-
+        
         return $result;
     }
 

@@ -15,8 +15,10 @@
         "magento/module-ui": ">=101.0.4",
         "magento/module-payment": "^100.3",
         "magento/module-vault": "101.*",
-        "magento/zendframework1": "~1.14.2",
-        "ext-json": "*"
+        "magento/zendframework1": "~1.15.1",
+        "ext-json": "*",
+        "ext-gd": "*",
+        "ext-zip": "*"
     },
     "type": "magento2-module",
     "authors": [
@@ -38,7 +40,10 @@
         }
     },
     "require-dev": {
-        "magento/magento-coding-standard": "*"
+        "magento/magento-coding-standard": "*",
+        "phpmd/phpmd": "^2.13",
+        "phpstan/extension-installer": "^1.2",
+        "phpstan/phpstan": "^1.6.8"
     },
     "scripts": {
         "post-install-cmd": "vendor/bin/phpcs --config-set installed_paths ../../..,../../phpcompatibility/php-compatibility/PHPCompatibility",

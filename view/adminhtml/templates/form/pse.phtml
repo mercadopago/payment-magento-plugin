@@ -17,7 +17,7 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
 ?>
 
 <fieldset class="admin__fieldset payment-method" id="payment_form_<?= /* @noEscape */ $code ?>" style="display: none;">
-    <input type="hidden" name="payment[payment_method_id]" value="<?=  /* @noEscape */ $paymentMethodId ?>"> 
+    <input type="hidden" name="payment[payment_method_id]" value="<?=  /* @noEscape */ $paymentMethodId ?>">
     <div class="field-text required admin__field _required">
         <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_payer_document_type">
             <span><?= $block->escapeHtml(__('Document Type')) ?></span>
@@ -34,10 +34,10 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
     </div>
     <div class="field-text required admin__field _required">
         <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_payer_document_identification">
-            <span><?= $block->escapeHtml(__('Payer Document Identification')) ?></span>
+            <span><?= $block->escapeHtml(__('Document number')) ?></span>
         </label>
         <div class="admin__field-control">
-            <input type="text" title="<?= $block->escapeHtml(__('Payer Document Identification')) ?>"
+            <input type="text" title="<?= $block->escapeHtml(__('Document number')) ?>"
                     class="required-entry admin__control-text"
                     id="<?= /* @noEscape */ $code ?>_payer_document_identification"
                     name="payment[payer_document_identification]"
@@ -108,22 +108,22 @@ $publicToken = $block->escapeHtml($block->getMpPublicKey());
             value: 'id'
         }) {
             const { label, value } = labelsAndKeys;
-        
+
             elem.options.length = 0;
-        
+
             const tempOptions = document.createDocumentFragment();
-        
+
             options.forEach(option => {
                 const optValue = option[value];
                 const optLabel = option[label];
-        
+
                 const opt = document.createElement('option');
                 opt.value = optValue;
                 opt.textContent = optLabel;
-        
+
                 tempOptions.appendChild(opt);
             });
-        
+
             elem.appendChild(tempOptions);
         };
         getIdentificationTypes();

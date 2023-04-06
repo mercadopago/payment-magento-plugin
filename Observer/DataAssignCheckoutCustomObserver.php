@@ -53,6 +53,16 @@ class DataAssignCheckoutCustomObserver extends AbstractDataAssignObserver
     public const FINANCIAL_INSTITUTION = 'financial_institution';
 
     /**
+     * Payment method type ID.
+     */
+    public const PAYMENT_TYPE_ID =  'payment_type_id';
+
+     /**
+     * Payment method option ID.
+     */
+    public const PAYMENT_OPTION_ID =  'payment_option_id';
+
+    /**
      * @var array
      */
     protected $addInformationList = [
@@ -63,6 +73,8 @@ class DataAssignCheckoutCustomObserver extends AbstractDataAssignObserver
         self::PAYER_LAST_NAME,
         self::PAYER_ENTITY_TYPE,
         self::FINANCIAL_INSTITUTION,
+        self::PAYMENT_TYPE_ID,
+        self::PAYMENT_OPTION_ID,
     ];
 
     /**
