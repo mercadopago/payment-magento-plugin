@@ -13,6 +13,7 @@ use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\HTTP\ZendClient;
 use MercadoPago\PaymentMagento\Controller\MpIndex;
 
 /**
@@ -75,18 +76,34 @@ class CheckoutCustom extends MpIndex implements CsrfAwareActionInterface
 
         if ($mpStatus === 'refunded') {
             $mpAmountRefund = $mercadopagoData['total_refunded'];
+            
+            if(str_contains($notificationId, 'TP-')) {
+                try {
+                    /** @var ZendClient $client */
+                    $client = $this->httpClientFactory->create();
+                    $storeId = $mercadopagoData["payments_metadata"]["store_id"];
+                    $url = $this->config->getApiUrl();
+                    $clientConfigs = $this->config->getClientConfigs();
+                    $clientHeaders = $this->config->getClientHeaders($storeId);
+        
+                    $client->setUri($url.'/v1/asgard/notification/'.$notificationId);
+                    $client->setConfig($clientConfigs);
+                    $client->setHeaders($clientHeaders);
+                    $client->setMethod(ZendClient::GET);
+                    $responseBody = $client->request()->getBody();
+                    $respData = $this->json->unserialize($responseBody);
+                    $mpTransactionId = $respData["payments_details"][0]["id"];
+        
+                } catch (Exception $e) {
+                    $this->logger->debug(['exception' => $e->getMessage()]);
+                }
+            }
         }
 
         $this->logger->debug([
             'action'    => 'checkout_custom',
-            'payload'   => $response,
-            'mpstatus'  => $mpStatus,
-            'transac'   => $mpTransactionId,
-            'notif'     => $notificationId,
-            'refund'    => $mpAmountRefund,
-            'details'    => $this->json->serialize($paymentsDetails)
+            'payload'   => $response
         ]);
-
 
         return $this->initProcess($mpTransactionId, $mpStatus, $mpAmountRefund, $notificationId, $paymentsDetails);
     }

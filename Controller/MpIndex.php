@@ -14,6 +14,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Framework\Notification\NotifierInterface as NotifierPool;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\View\Result\PageFactory;
@@ -107,6 +108,11 @@ abstract class MpIndex extends Action
     protected $addChildPayment;
 
     /**
+     * @var ZendClientFactory
+     */
+    protected $httpClientFactory;
+
+    /**
      * @param Config                         $config
      * @param Context                        $context
      * @param Json                           $json
@@ -122,6 +128,7 @@ abstract class MpIndex extends Action
      * @param CreditmemoService              $creditMemoService
      * @param Invoice                        $invoice
      * @param CheckoutProAddChildPayment     $addChildPayment
+     * @param ZendClientFactory              $httpClientFactory
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -140,7 +147,8 @@ abstract class MpIndex extends Action
         CreditmemoFactory $creditMemoFactory,
         CreditmemoService $creditMemoService,
         Invoice $invoice,
-        CheckoutProAddChildPayment $addChildPayment
+        CheckoutProAddChildPayment $addChildPayment,
+        ZendClientFactory $httpClientFactory,
     ) {
         parent::__construct($context);
         $this->config = $config;
@@ -157,6 +165,7 @@ abstract class MpIndex extends Action
         $this->creditMemoService = $creditMemoService;
         $this->invoice = $invoice;
         $this->addChildPayment = $addChildPayment;
+        $this->httpClientFactory = $httpClientFactory;
     }
 
     /**
